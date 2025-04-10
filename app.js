@@ -1,20 +1,27 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var indexRouter = require('./routes/index');
+let createError = require('http-errors');
+let express = require('express');
+let path = require('path');
+let dotenv = require("dotenv")
+let cookieParser = require('cookie-parser');
+let logger = require('morgan');
+let indexRouter = require('./routes/index');
 const { default: mongoose } = require('mongoose');
 let expreesSession = require("express-session");
 const passport = require('passport');
 const UserModel = require("./model/UserModel")
 
-var app = express();
+// DotEnv
+dotenv.config()
+
+
+// App
+let app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// Passport Js
 app.use(expreesSession({
   resave:false,
   saveUninitialized:false,
@@ -32,7 +39,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-// app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -52,7 +58,9 @@ app.use(function(err, req, res, next) {
 
 // Database Connect
 
-mongoose.connect("mongodb://127.0.0.1:27017/pin").then(()=>
+const Dburl = process.env.DB_URL
+const DbName = process.env.DB_NAME
+mongoose.connect(Dburl , {dbName:DbName}).then(()=>
 {
   console.log("Database in connect");
 }).catch(()=>

@@ -1,0 +1,48 @@
+<% include ./partials/header.ejs %>
+
+    <div class="min-h-screen flex items-center justify-center bg-white px-4 py-10">
+        <div class="w-full max-w-md sm:max-w-lg bg-white border border-zinc-200 rounded-2xl shadow-lg p-6 sm:p-10">
+            <h1 class="text-2xl sm:text-3xl font-semibold text-zinc-800 mb-8 text-center">
+                Edit Your Profile
+            </h1>
+
+            <!-- Avatar Display -->
+            <div class="flex justify-center mb-6">
+                <div class="h-24 w-24 sm:h-28 sm:w-28 rounded-full overflow-hidden border border-zinc-300 shadow">
+                    <img src="/images/uploads/<%= user.profilePicture %>" alt="Profile Picture"
+                        class="w-full h-full object-cover" />
+                </div>
+            </div>
+
+            <!-- Edit Form -->
+            <form action="/edit" method="POST" class="space-y-5">
+                <div>
+                    <label class="block text-sm font-medium text-zinc-600">Full Name</label>
+                    <input type="text" name="fullname" value="<%= user.name %>"
+                        class="w-full mt-1 px-4 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-500"
+                        required />
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-zinc-600">Email</label>
+                    <input type="email" name="email" value="<%= user.email %>"
+                        class="w-full mt-1 px-4 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-500"
+                        required />
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-zinc-600">Contact</label>
+                    <input type="text" name="contact" value="<%= user.contact %>"
+                        class="w-full mt-1 px-4 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-500"
+                        required />
+                </div>
+
+                <button type="submit"
+                    class="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-full font-semibold transition duration-200">
+                    Save Changes
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <% include ./partials/footer.ejs %>

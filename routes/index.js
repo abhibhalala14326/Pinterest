@@ -13,22 +13,31 @@ router.get('/', function (req, res, next) {
   res.render('index', { nav: false });
 });
 
+// Get Register Page
 router.get('/register', async function (req, res, next) {
-
   res.render('register', {nav: false });
 });
 
+
+// Get Error Page
+router.get('/404', async function (req, res, next) {
+
+  res.render('404', { nav: false });
+});
+
+// Get Profile Page 
 router.get('/profile', IsLoggedIn, async function (req, res, next) {
   const user = await UserModel.findOne({
     username: req.session.passport.user
   }).populate("posts");
   console.log(user);
-  
+
   res.render('profile', { user, nav: true }
   );
 });
 
 
+// Get Posts Page
 router.get("/post/:id", IsLoggedIn, async function (req, res, next) {
   try {
     const post = await PostModel.findById(req.params.id).populate("user");
@@ -45,6 +54,34 @@ router.get("/post/:id", IsLoggedIn, async function (req, res, next) {
   }
 });
 
+// Update User Data
+
+router.get("/edit", IsLoggedIn, async (req, res) => {
+  const user = await UserModel.findOne({ username: req.session.passport.user });
+  res.render("edit", { user, nav: true });
+});
+
+
+router.post("/edit", IsLoggedIn, async (req, res) => {
+  const { fullname, email, contact } = req.body;
+
+  try {
+    const user = await UserModel.findOne({ username: req.session.passport.user });
+    user.name = fullname;
+    user.email = email;
+    user.contact = contact;
+    await user.save();
+
+    res.redirect("/profile");
+  } catch (err) {
+    console.error("Update error:", err);
+    res.status(500).send("Something went wrong.");
+  }
+});
+
+
+
+// Get Feed Page
 
 router.get('/feed', IsLoggedIn, async function (req, res, next) {
   const user = await UserModel.findOne({
@@ -57,7 +94,7 @@ router.get('/feed', IsLoggedIn, async function (req, res, next) {
   );
 });
 
-
+// Get All post 
 router.get('/show/posts', IsLoggedIn, async function (req, res, next) {
   const user = await UserModel.findOne({
     username: req.session.passport.user
@@ -68,7 +105,7 @@ router.get('/show/posts', IsLoggedIn, async function (req, res, next) {
   );
 });
 
-
+// Create A New Post
 router.post('/createpost', IsLoggedIn, upload.single("postimage"), async function (req, res, next) {
   let { title, description, user } = req.body;
   const users = await UserModel.findOne({
@@ -88,7 +125,7 @@ router.post('/createpost', IsLoggedIn, upload.single("postimage"), async functio
   res.redirect('/profile');
 });
 
-
+// 
 router.get('/add', IsLoggedIn, async function (req, res, next) {
   const user = await UserModel.findOne({
     username: req.session.passport.user
@@ -96,6 +133,8 @@ router.get('/add', IsLoggedIn, async function (req, res, next) {
   res.render('add', { user, nav: true }
   );
 });
+
+// Upload ProfileImage
 
 router.post('/fileupload', IsLoggedIn, upload.single("image"), async function (req, res, next) {
   const user = await UserModel.findOne({
@@ -111,7 +150,7 @@ router.post('/fileupload', IsLoggedIn, upload.single("image"), async function (r
 
 });
 
-
+// Password Validate 
 function validatePassword(password) {
   const minLength = 8;
   const hasNumber = /\d/;
@@ -126,6 +165,7 @@ function validatePassword(password) {
   return null;
 }
 
+// Register Router
 router.post("/register", async function (req, res, next) {
   const { username, email, password, contact  } = req.body;
 
@@ -148,7 +188,7 @@ router.post("/register", async function (req, res, next) {
 });
 
 
-
+// Login Router
 router.post('/login', passport.authenticate("local", {
   successRedirect: "/profile",
   failureRedirect: "/",
@@ -157,6 +197,8 @@ router.post('/login', passport.authenticate("local", {
 
 });
 
+
+// Logout Router
 router.get("/logout", (req, res, next) => {
   req.logout((err) => {
     if (err) {
@@ -165,6 +207,8 @@ router.get("/logout", (req, res, next) => {
     res.redirect("/")
   })
 })
+
+// IsLoggedIn function 
 
 function IsLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
