@@ -1,0 +1,40 @@
+<% include ./partials/header.ejs %>
+
+  <div
+    class="w-full min-h-screen bg-[url('https://media.istockphoto.com/id/839242028/photo/fisherman-boy-and-his-granfather-catching-fish-with-equipment-black-and-white-vintage-film.webp?a=1&b=1&s=612x612&w=0&k=20&c=kr8Blealznar6Oa3EfEqgxloPNeW90MAlZ9vRdKD3nQ=')] bg-center bg-cover flex items-center justify-center px-4 py-12 sm:py-16">
+
+    <div
+      class="w-full max-w-md sm:max-w-lg md:max-w-xl lg:w-[30vw] bg-zinc-100 py-10 px-6 sm:px-10 md:px-14 rounded-[30px] shadow-2xl">
+      <h1 class="text-2xl sm:text-3xl text-center font-semibold text-zinc-700 tracking-tight capitalize mb-8">
+        Welcome to Printerest
+      </h1>
+
+      <form action="/login" method="post" class="space-y-4">
+        <input
+          class="border border-zinc-300 rounded-md w-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
+          type="text" name="username" placeholder="Username" required>
+        <input
+          class="border border-zinc-300 rounded-md w-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
+          type="password" name="password" placeholder="Password" required>
+
+        <div class="text-right">
+          <a href="#" class="text-sm text-red-600 hover:underline">Forgot password?</a>
+        </div>
+
+        <button type="submit"
+          class="w-full py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-full transition duration-200">
+          Login
+        </button>
+      </form>
+
+      <p class="text-xs font-medium text-zinc-700 mt-6 text-center px-4">
+        By continuing, you agree to Pinterest's Terms of Service and acknowledge you've read our Privacy Policy.
+      </p>
+
+      <a href="/register" class="block mt-6 text-sm font-semibold text-red-600 text-center hover:underline">
+        Don't have an account?
+      </a>
+    </div>
+  </div>
+
+  <% include ./partials/footer.ejs %>

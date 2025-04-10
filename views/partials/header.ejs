@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+</head>
+
+<body>
+
+    <% if(nav===true) { %>
+    <!-- Header Navbar -->
+    <div class="w-full px-6 py-4 flex justify-between items-center bg-zinc-800 text-white relative z-50">
+        <h3 class="text-xl font-bold">Printerest</h3>
+    
+        <!-- Desktop Links -->
+        <div class="hidden md:flex gap-10 items-center">
+            <a href="/profile" class="hover:text-red-400">Profile</a>
+            <a href="/feed" class="hover:text-red-400">Feed</a>
+            <a href="/logout" class="px-3 py-2 bg-red-700 rounded-lg hover:bg-red-800">Logout</a>
+        </div>
+    
+        <!-- Mobile Menu Button -->
+        <button id="menuBtn" class="md:hidden text-white focus:outline-none text-2xl">
+            ☰
+        </button>
+    </div>
+    
+    <!-- Mobile Sidebar -->
+    <div id="mobileMenu"
+        class="fixed top-0 left-0 w-64 h-full bg-zinc-900 text-white transform -translate-x-full transition-transform duration-300 z-40 p-6">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-bold">Menu</h3>
+            <button id="closeMenu" class="text-white text-2xl">✕</button>
+        </div>
+        <nav class="flex flex-col gap-4">
+            <a href="/profile" class="hover:text-red-400">Profile</a>
+            <a href="/feed" class="hover:text-red-400">Feed</a>
+            <a href="/logout" class="px-3 py-2 bg-red-700 rounded-lg hover:bg-red-800 w-max">Logout</a>
+        </nav>
+    </div>
+    
+    <!-- Overlay for sidebar -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-30"></div>
+
+        <% } %>
+
+
+        <script>
+            const menuBtn = document.getElementById('menuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const closeMenu = document.getElementById('closeMenu');
+            const overlay = document.getElementById('overlay');
+
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            });
+
+            closeMenu.addEventListener('click', () => {
+                mobileMenu.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            });
+
+            overlay.addEventListener('click', () => {
+                mobileMenu.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            });
+        </script>
