@@ -1,22 +1,26 @@
 <% include ./partials/header.ejs %>
-    <div class="w-full h-screen  bg-zinc-800 px-10 py-8  text-white">
-        <div class="cards flex flex-wrap gap-10  ">
-            <% posts.forEach((post)=> { %>
-                <a href="/post/<%= post._id%>">
 
-                <div class="w-32">
-                    <div class="card w-full h-40 bg-sky-200 rounded-lg overflow-hidden">
-                        <img src="<%= post.image %>" alt="" class="h-full w-full object-cover">
-                    </div>
-                    <h5 class="mt-2 text-sm ">
-                        <%= post.title %>
-                    </h5>
-                </div>
-                </a>
-
-                <% })%>
-
+    <% if (posts && posts.length> 0) { %>
+        <div class="w-full h-screen bg-zinc-800 px-10 py-8 text-white">
+            <div class="cards flex flex-wrap gap-10">
+                <% posts.forEach((post)=> { %>
+                    <a href="/post/<%= post._id %>">
+                        <div class="w-32">
+                            <div class="card w-full h-40 bg-sky-200 rounded-lg overflow-hidden">
+                                <img src="<%= post.image %>" alt="" class="h-full w-full object-cover">
+                            </div>
+                            <h5 class="mt-2 text-sm">
+                                <%= post.title %>
+                            </h5>
+                        </div>
+                    </a>
+                    <% }) %>
+            </div>
         </div>
+        <% } else { %>
+            <div class="w-full h-screen bg-zinc-800 px-10 py-8 flex justify-center items-center text-white">
+                <p>No posts available.</p>
+            </div>
+            <% } %>
 
-    </div>
-    <% include ./partials/footer.ejs %>
+                <% include ./partials/footer.ejs %>
