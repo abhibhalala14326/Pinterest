@@ -9,7 +9,6 @@ const { default: mongoose } = require('mongoose');
 let expreesSession = require("express-session");
 const passport = require('passport');
 const UserModel = require("./model/UserModel")
-const MongoStore = require('connect-mongo');
 
 // DotEnv
 dotenv.config()
@@ -24,7 +23,6 @@ app.set('view engine', 'ejs');
 
 // Passport Js
 app.use(expreesSession({
-  store: MongoStore.create({ mongoUrl: `${process.env.DB_URL}/${process.env.DB_NAME}`  }),
   resave:false,
   saveUninitialized:false,
   secret:"pin"
