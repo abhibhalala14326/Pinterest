@@ -9,10 +9,19 @@ const { default: mongoose } = require('mongoose');
 let expreesSession = require("express-session");
 const passport = require('passport');
 const UserModel = require("./model/UserModel")
+let cloudinary = require('cloudinary').v2;
 
 // DotEnv
 dotenv.config()
 
+
+// cloudinary
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET
+});
 
 // App
 let app = express();

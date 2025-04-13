@@ -4,7 +4,7 @@
             <% user.posts.forEach((post)=> { %>
                 <div class="w-32">
                     <div class="card w-full h-40 bg-sky-200 rounded-lg overflow-hidden">
-                        <img src="/images/uploads/<%= post.image %>" alt="" class="h-full w-full object-cover">
+                        <img src="<%= post.image %>" alt="" class="h-full w-full object-cover">
                     </div>
                     <h5 class="mt-2 text-sm "><%= post.title %></h5>
                 </div>

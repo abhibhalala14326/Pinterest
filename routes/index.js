@@ -5,6 +5,8 @@ const PostModel = require("../model/postModel.js");
 const passport = require('passport');
 const localStrategy = require("passport-local")
 const upload = require("../multer/upload.js")
+let cloudinary = require('cloudinary').v2;
+
 
 passport.use(new localStrategy(UserModel.authenticate("local")))
 
@@ -112,11 +114,20 @@ router.post('/createpost', IsLoggedIn, upload.single("postimage"), async functio
     username: req.session.passport.user
   })
 
+  let file = req.file.path
+
+  let PostImageg = await cloudinary.uploader.upload(file,{
+    resource_type:"auto"
+  })
+
+  console.log( PostImageg.secure_url)
+  
+
   const createPost = await PostModel.create({
     user: users._id,
     title,
     description,
-    image: req.file.filename
+    image: PostImageg.secure_url
   })
 
   users.posts.push(createPost._id)
@@ -141,7 +152,13 @@ router.post('/fileupload', IsLoggedIn, upload.single("image"), async function (r
     username: req.session.passport.user
   })
 
-  user.profilePicture = req.file.filename
+  let file = req.file.path
+
+  let profilePIC = await cloudinary.uploader.upload(file, {
+    resource_type: "auto"
+  })
+
+  user.profilePicture = profilePIC.secure_url
   await user.save()
 
   console.log(user);
